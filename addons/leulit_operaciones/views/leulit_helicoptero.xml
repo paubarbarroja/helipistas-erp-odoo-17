@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        
+        <record model="ir.ui.view" id="leulit_20210520_0917_form">
+            <field name="name">leulit_20210520_0917_form</field>
+            <field name="model">leulit.helicoptero</field>
+            <field name="inherit_id" ref="leulit_parte_145.leulit_20200626_1201_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='airtime']" position="after">
+                    <field name="sling_cycles" invisible="'name'"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='doitov']" position="after">
+                    <field name="tareaov" domain="[('helicoptero_id','=',id),('is_template','=',False),('overhaul','=','helicopter')]"
+                    invisible="'tipo'"/>
+                </xpath> -->
+                <!-- <xpath expr="//field[@name='doitov']" position="before">
+                    <field name="ovfecha" invisible="('doitov' or '=')"/>
+                    <field name="ovhoras" widget="float_time" invisible="('doitov' or '=')"/>
+                    <field name="ov_afterhoras" widget="float_time" invisible="('doitov' or '=')"/>
+                    <field name="ov_rh" widget="float_time" invisible="('doitov' or '=')"/>
+                    <field name="ov_rd" invisible="('doitov' or '=')"/>
+                    <field name="ovrh_first" widget="float_time" invisible="('doitov' or '!=')"/>
+                    <field name="ovrd_first" invisible="('doitov' or '!=')"/>
+                </xpath> -->
+                <xpath expr="//field[@name='landings']" position="after">
+                    <field name="arlandingstart"/>
+                    <field name="arlandings"/>
+                </xpath>
+            </field>
+        </record>        
+
+        
+    </data>
+</odoo>
