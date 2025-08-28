@@ -26,7 +26,6 @@ class leulit_helicoptero_oilreport(models.Model):
 
 
 
-    # TODO: Activar cuando este el modulo operaciones instalado
     # def init(self):
     #     tools.drop_view_if_exists(self._cr, 'leulit_helicoptero_oilreport')
     #     self._cr.execute("""

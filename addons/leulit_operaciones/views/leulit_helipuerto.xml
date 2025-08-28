@@ -31,7 +31,7 @@
                     <field name="punto_generado" invisible="1"/>
                     <header>
                         <button name="generar_ficha_helipuerto_aerodromo" string="Generar ficha" class="oe_highlight" type="object"/>
-                        <button name="generar_punto" string="Generar punto" class="oe_highlight" type="object" invisible="'punto_generado'"/>
+                        <button name="generar_punto" string="Generar punto" class="oe_highlight" type="object"  invisible="((punto_generado))" />
                     </header>
                     <sheet>
                         <div id="control_versiones_helipuerto">

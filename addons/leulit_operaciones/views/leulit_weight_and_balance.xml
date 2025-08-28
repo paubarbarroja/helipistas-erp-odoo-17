@@ -6,7 +6,7 @@
          <field name="name">leulit_20210128_1642_form</field>
          <field name="model">leulit.weight_and_balance</field>
          <field name="arch" type="xml">
-            <form string="Silabus" js_class="weight_and_balance_view">
+            <form string="Silabus">
                   <field name="id" invisible="1"/>
                   <field name="vuelo_id" readonly="1"/>
                   <field name="fieldslist" invisible="1"/>
@@ -92,7 +92,7 @@
                               <field class="keyboarddisabled" name="fls_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'CABRI G2']))" >
                            <td>Aft right passenger</td>
                            <td>
                               <field class="wb_field" name="aftrp" nolabel="1"/>
@@ -110,7 +110,7 @@
                               <field class="keyboarddisabled" name="aftrp_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'CABRI G2']))" >
                            <td>Aft left passenger</td>
                            <td>
                               <field class="wb_field" name="aftlp" nolabel="1"/>
@@ -128,7 +128,7 @@
                               <field class="keyboarddisabled" name="aftlp_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Aft center passenger</td>
                            <td>
                               <field class="wb_field" name="aftcp" nolabel="1"/>
@@ -146,7 +146,7 @@
                               <field class="keyboarddisabled" name="aftcp_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'EC120B']))" >
                            <td>Front baggage (max 5kg)</td>
                            <td>
                               <field class="wb_field" name="front_baggage" nolabel="1"/>
@@ -164,7 +164,7 @@
                               <field class="keyboarddisabled" name="front_baggage_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'EC120B']))" >
                            <td>Main baggage (max 40kg)</td>
                            <td>
                               <field class="wb_field" name="main_baggage" nolabel="1"/>
@@ -182,7 +182,7 @@
                               <field class="keyboarddisabled" name="main_baggage_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Freight and Zona C</td>
                            <td>
                               <field class="wb_field" name="baggage_zonac" nolabel="1"/>
@@ -200,7 +200,7 @@
                               <field class="keyboarddisabled" name="baggage_zonac_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Freight and Zona D</td>
                            <td>
                               <field class="wb_field" name="baggage_zonad" nolabel="1"/>
@@ -218,7 +218,7 @@
                               <field class="keyboarddisabled" name="baggage_zonad_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']))" >
                            <td>Baggage under forward right seat</td>
                            <td>
                               <field class="wb_field" name="bufrs" nolabel="1"/>
@@ -236,7 +236,7 @@
                               <field class="keyboarddisabled" name="bufrs_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']))" >
                            <td>Baggage under forward left seat</td>
                            <td>
                               <field class="wb_field" name="bufls" nolabel="1"/>
@@ -254,7 +254,7 @@
                               <field class="keyboarddisabled" name="bufls_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']))" >
                            <td>Baggage under aft right seat</td>
                            <td>
                               <field class="wb_field" name="buaftrs" nolabel="1"/>
@@ -272,7 +272,7 @@
                               <field class="keyboarddisabled" name="buaftrs_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']))" >
                            <td>Baggage under aft left seat</td>
                            <td>
                               <field class="wb_field" name="buaftls" nolabel="1"/>
@@ -326,7 +326,7 @@
                               <field class="keyboarddisabled" name="forward_left_door_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']))" >
                            <td>Aft right door (remove <field class="wb_field" name="aft_right_door_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="aft_right_door" nolabel="1"/>
@@ -344,7 +344,7 @@
                               <field class="keyboarddisabled" name="aft_right_door_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']))" >
                            <td>Aft left door (remove <field class="wb_field_cb" name="aft_left_door_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="aft_left_door" nolabel="1"/>
@@ -362,7 +362,7 @@
                               <field class="keyboarddisabled" name="aft_left_door_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Sliding door (remove <field class="wb_field_cb" name="sliding_door_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="sliding_door" nolabel="1"/>
@@ -380,7 +380,7 @@
                               <field class="keyboarddisabled" name="sliding_door_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Rear cargo door (remove <field class="wb_field_cb" name="rear_cargo_door_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="rear_cargo_door" nolabel="1"/>
@@ -398,7 +398,7 @@
                               <field class="keyboarddisabled" name="rear_cargo_door_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (cyclic == 0))" >
                            <td>Cyclic (remove <field class="wb_field_cb" name="cyclic_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="cyclic" nolabel="1"/>
@@ -416,7 +416,7 @@
                               <field class="keyboarddisabled" name="cyclic_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (collective == 0))" >
                            <td>Collective (remove <field class="wb_field_cb" name="collective_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="collective" nolabel="1"/>
@@ -434,7 +434,7 @@
                               <field class="keyboarddisabled" name="collective_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (pedals == 0))" >
                            <td>Pedals (both) (remove <field class="wb_field_cb" name="pedals_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="pedals" nolabel="1"/>
@@ -452,7 +452,7 @@
                               <field class="keyboarddisabled" name="pedals_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (dualcontrols == 0))" >
                            <td>Removable controls (cyclic, collective, pedals) (remove <field class="wb_field" name="dualcontrols_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="dualcontrols" nolabel="1"/>
@@ -470,7 +470,7 @@
                               <field class="keyboarddisabled" name="dualcontrols_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (items_on_mount_bar_right_long_arm == 0))" >
                            <td>Items on accessory mount bar right (Add <field class="wb_field" name="items_on_mount_bar_right_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="items_on_mount_bar_right" nolabel="1"/>
@@ -488,7 +488,7 @@
                               <field class="keyboarddisabled" name="items_on_mount_bar_right_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['EC120B', 'CABRI G2']) or (items_on_mount_bar_left_long_arm == 0))" >
                            <td>Items on accessory mount bar left (Add <field class="wb_field" name="items_on_mount_bar_left_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="items_on_mount_bar_left" nolabel="1"/>
@@ -506,7 +506,7 @@
                               <field class="keyboarddisabled" name="items_on_mount_bar_left_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']) or (tyler_long_arm != 0))" >
                            <td>Cineflex (add <field class="wb_field_cb" name="cineflex_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="cineflex" nolabel="1"/>
@@ -524,7 +524,7 @@
                               <field class="keyboarddisabled" name="cineflex_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']) or (tyler_long_arm == 0))" >
                            <td>Tyler (add <field class="wb_field_cb" name="tyler_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="tyler" nolabel="1"/>
@@ -542,7 +542,7 @@
                               <field class="keyboarddisabled" name="tyler_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="('helicoptero_tipo' or 'in')">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'EC120B', 'CABRI G2']) or (gss_long_arm == 0))" >
                            <td>GSS (add <field class="wb_field_cb" name="gss_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="gss" nolabel="1"/>
@@ -560,7 +560,7 @@
                               <field class="keyboarddisabled" name="gss_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo != 'EC120B'))" >
                            <td>AF120 Camera Mount (add <field class="wb_field_cb" name="af120_camera_mount_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="af120_camera_mount" nolabel="1"/>
@@ -578,7 +578,7 @@
                               <field class="keyboarddisabled" name="af120_camera_mount_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Dual controls (remove <field class="wb_field" name="dualcontrols_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="dualcontrols" nolabel="1"/>
@@ -596,7 +596,7 @@
                               <field class="keyboarddisabled" name="dualcontrols_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Front left seat (remove <field class="wb_field_cb" name="frontseat_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="frontseat" nolabel="1"/>
@@ -614,7 +614,7 @@
                               <field class="keyboarddisabled" name="frontseat_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Rear 3 places seat (remove <field class="wb_field_cb" name="rearseat_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="rearseat" nolabel="1"/>
@@ -632,7 +632,7 @@
                               <field class="keyboarddisabled" name="rearseat_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['R22', 'R44', 'CABRI G2']))" >
                            <td>Freight and baggage (without rear seats)(add <field class="wb_field_cb" name="baggage_noseats_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="baggage_noseats" nolabel="1"/>
@@ -650,7 +650,7 @@
                               <field class="keyboarddisabled" name="baggage_noseats_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_matricula'">
+                        <tr  invisible="((helicoptero_matricula != 'EC-HIL'))" >
                            <td>Cargo load (add <field class="wb_field_cb" name="carga_externa_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="carga_externa" nolabel="1"/>
@@ -668,7 +668,7 @@
                               <field class="keyboarddisabled" name="carga_externa_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_matricula'">
+                        <tr  invisible="((helicoptero_matricula != 'EC-HIL'))" >
                            <td>Cargo hook(add <field class="wb_field_cb" name="gancho_carga_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="gancho_carga" nolabel="1"/>
@@ -686,7 +686,7 @@
                               <field class="keyboarddisabled" name="gancho_carga_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['CABRI G2', 'EC120B']))" >
                            <td>Cargo load (add <field class="wb_field_cb" name="carga_externa_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="carga_externa" nolabel="1"/>
@@ -704,7 +704,7 @@
                               <field class="keyboarddisabled" name="carga_externa_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_tipo'">
+                        <tr  invisible="((helicoptero_tipo in ['CABRI G2', 'EC120B']))" >
                            <td>Cargo hook(add <field class="wb_field_cb" name="gancho_carga_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="gancho_carga" nolabel="1"/>
@@ -722,7 +722,7 @@
                               <field class="keyboarddisabled" name="gancho_carga_lat_moment" nolabel="1"/>
                            </td>
                         </tr>
-                        <tr invisible="'helicoptero_matricula'">
+                        <tr  invisible="((helicoptero_matricula != 'EC-HIL'))" >
                            <td>Mirror (add <field class="wb_field_cb" name="espejo_cb" nolabel="1"/>)</td>
                            <td>
                               <field class="wb_field" name="espejo" nolabel="1"/>
@@ -876,11 +876,13 @@
                      <div>
                         <p><b>Longitudinal CG</b></p>
                         <div style="border: 1px solid black;padding:5px; margin-bottom:10px;" id="longcanvasdiv">
+                           <!--canvas width="400" height="200" id="longcanvas"></canvas-->
                         </div>
                      </div>
                      <div>
                         <p><b>Lateral CG</b></p>
                         <div style="border: 1px solid black;padding:5px; margin-bottom:10px;" id="latcanvasdiv">
+                           <!--canvas width="400" height="200" id="latcanvas"></canvas-->
                         </div>
                      </div>
                   </div>

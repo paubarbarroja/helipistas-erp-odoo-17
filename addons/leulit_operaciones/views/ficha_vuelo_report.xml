@@ -1091,10 +1091,14 @@
                                             <table class="fullwidth">
                                                 <tr>
                                                     <td style="with:50%;" align="center">
+                                                        <!--div style="with:400px; margin-to:20px;border: 1px solid black;padding:10px" id="longcanvasdiv"-->
                                                         <img t-attf-src="#{wandb['canvas_long']}"/>
+                                                        <!--/div-->
                                                     </td>
                                                     <td style="with:50%;"  align="center">                                                
+                                                        <!--div style="with:400px; margin-to:20px;border: 1px solid black;padding:10px" id="latcanvasdiv"-->
                                                         <img t-attf-src="#{wandb['canvas_lat']}"/>                                                    
+                                                        <!--/div-->
                                                     </td>
                                                 </tr>
                                             </table>

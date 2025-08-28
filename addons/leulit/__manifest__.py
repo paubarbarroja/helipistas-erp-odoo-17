@@ -24,7 +24,8 @@
         "maintenance",
         "survey",
         "mass_mailing",
-        "fleet"
+        "fleet",
+        "project_task_code"
     ],
     "data": [
         "groups.xml",

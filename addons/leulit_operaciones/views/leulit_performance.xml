@@ -7,7 +7,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance EC120B" js_class="performance_view">
+                <form string="Performance EC120B">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -45,7 +45,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance EC-HIL" js_class="performance_view">
+                <form string="Performance EC-HIL">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -83,7 +83,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance R22" js_class="performance_view">
+                <form string="Performance R22">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -121,7 +121,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance R22 II" js_class="performance_view">
+                <form string="Performance R22 II">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -159,7 +159,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance R44" js_class="performance_view">
+                <form string="Performance R44">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -197,7 +197,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance R44 II" js_class="performance_view">
+                <form string="Performance R44 II">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>
@@ -235,7 +235,7 @@
             <field name="model">leulit.performance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Performance CABRI G2" js_class="performance_view">
+                <form string="Performance CABRI G2">
                     <group class="d-flex align-items-center">
                         <group col="2" colspan="2">
                             <group>

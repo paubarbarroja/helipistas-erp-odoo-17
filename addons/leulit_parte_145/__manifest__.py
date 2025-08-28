@@ -16,6 +16,7 @@
         "views/leulit_helicoptero.xml",
         "views/leulit_modelo.xml",
         "views/leulit_helicoptero_oilreport.xml",
+        "views/leulit_control_wb_report.xml",
         "menu.xml"
     ],
     "demo": [],

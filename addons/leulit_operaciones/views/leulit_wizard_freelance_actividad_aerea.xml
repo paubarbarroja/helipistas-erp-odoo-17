@@ -20,13 +20,13 @@
                     </p>
                     <field name="text"/>
                     <p><br/><br/><strong>Firma:</strong></p>
-                    <button name="send_code_mail" type="object" string="Enviar Codigo al Mail para Firmar" class="oe_highlight" invisible="'code_sent'"/>
+                    <button name="send_code_mail" type="object" string="Enviar Codigo al Mail para Firmar" class="oe_highlight"  invisible="((code_sent != 0))" />
                     <p><strong>Código:</strong></p>
-                    <field name="code" invisible="'code_sent'"/>
+                    <field name="code"  invisible="((code_sent == 0))" />
                     <field name="code_sent" invisible="1"/>
                     <field name="date" invisible="1"/>
                     <footer>
-                        <button name="accept_certificate_actividad_aerea" type="object" string="Si" class="oe_highlight" invisible="'code'"/>
+                        <button name="accept_certificate_actividad_aerea" type="object" string="Si" class="oe_highlight"  invisible="((code == 0))" />
                     </footer>
                 </form>
             </field>

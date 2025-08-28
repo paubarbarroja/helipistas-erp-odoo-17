@@ -18,7 +18,7 @@
             <field name="name">leulit_20201026_1033_form</field>
             <field name="model">leulit.ruta</field>
             <field name="arch" type="xml">
-                <form string="Ruta" js_class="gmap_ruta">
+                <form string="Ruta">
                     <sheet>
                         <div>
                             <group col="2">
@@ -38,7 +38,7 @@
                                 <field name="origen_id" options="{'no_create': True, 'edit': False, 'no_open':true}"/>
                                 <field name="destino_id" options="{'no_create': True, 'edit': False, 'no_open':true}"/>
                             </group>
-                            <field name="aerovia_ids" colspan="2" nolabel="1" readonly="'id'">
+                            <field name="aerovia_ids" colspan="2" nolabel="1"  readonly="((not id))" >
                                 <tree string="Aerovías" editable="bottom" decoration-info="water_zone==True">
                                     <field name="sequence"/>
                                     <field name="aerovia_id" options="{'no_create': True, 'edit': False, 'no_open':true}"/>

@@ -1,157 +1,99 @@
 #!/usr/bin/env python3
+# odoo17_attrs_translate.py
 import re, ast, sys
 from pathlib import Path
+from typing import Any
 
-# Encuentra attrs=" {...} " preservando comillas y espacios
 ATTRS_RE = re.compile(r'attrs\s*=\s*([\'"])(.*?)\1', re.DOTALL)
 
-OP_MAP = {
-    '=': '==',
-    '!=': '!=',
-    '>': '>',
-    '<': '<',
-    '>=': '>=',
-    '<=': '<=',
-    'in': 'in',
-    'not in': 'not in',
-    # Odoo a veces usa '=' con listas para 'in'
-}
-
-def tokenise(domain):
-    """Convierte una lista/domain de Odoo (literal Python) en una secuencia de tokens."""
-    if isinstance(domain, (list, tuple)):
-        for item in domain:
-            yield from tokenise(item)
-    elif isinstance(domain, str) and domain in ('&', '|', '!'):
-        yield domain
+def _expr_from_tuple(cond: tuple) -> str:
+    fld = cond[0]
+    if len(cond) == 2:
+        op, val = '=', cond[1]
     else:
-        yield domain
+        op, val = str(cond[1]).strip(), cond[2]
+    if op == '=' and isinstance(val, (list, tuple)):
+        op = 'in'
+    op_map = {'=':'==','==':'==','!=':'!=','>':'>','<':'<','>=':'>=','<=':'<=','in':'in','not in':'not in'}
+    pyop = op_map.get(op)
+    if not pyop:
+        raise ValueError(f"Operador no soportado: {op}")
+    # Simplificaciones booleanas
+    if pyop == '==':
+        if val is True:  return f"({fld})"
+        if val is False: return f"(not {fld})"
+    if pyop == '!=':
+        if val is True:  return f"(not {fld})"
+        if val is False: return f"({fld})"
+    return f"({fld} {pyop} {repr(val)})"
 
-def to_expr_from_domain(domain):
-    """
-    Convierte un domain estilo Odoo a expresión Python infija.
-    Soporta &, |, ! en notación prefija y tuplas (fld, op, val).
-    """
-    # Usamos un parser recursivo de notación prefija sobre una lista lineal de tokens
-    tokens = list(tokenise(domain))
-    # Re-construye en prefijo real
-    def build(it):
-        try:
-            t = next(it)
-        except StopIteration:
-            raise ValueError("Domain mal formado")
+def _build_expr_prefix(tokens: list) -> str:
+    it = iter(tokens)
+    def consume() -> str:
+        t: Any = next(it)
+        if isinstance(t, list):
+            return _build_expr_prefix(t)
+        if isinstance(t, tuple):
+            return _expr_from_tuple(t)
         if t == '&':
-            a = build(it); b = build(it)
+            a, b = consume(), consume()
             return f"({a} and {b})"
         if t == '|':
-            a = build(it); b = build(it)
+            a, b = consume(), consume()
             return f"({a} or {b})"
         if t == '!':
-            a = build(it)
+            a = consume()
             return f"(not ({a}))"
-        if (isinstance(t, (list, tuple))
-            and len(t) in (2,3)
-            and isinstance(t[0], str)):
-            # ('field','=',value)  o ('field','=',) rarezas
-            fld = t[0]
-            if len(t) == 2:
-                # ('field', value) → equivale a '='
-                op, val = '=', t[1]
-            else:
-                op, val = str(t[1]).strip(), t[2]
-            # Si valor es lista y op '=', úsalo como 'in'
-            if op == '=' and isinstance(val, (list, tuple)):
-                op = 'in'
-            pyop = OP_MAP.get(op)
-            if pyop is None:
-                raise ValueError(f"Operador no soportado: {op}")
-            # Serializa valor como literal Python válido
-            val_src = repr(val)
-            # Para relacionales en vistas, el valor real es id/ids; asumimos correcto
-            if pyop in ('in','not in'):
-                return f"({fld} {pyop} {val_src})"
-            else:
-                return f"({fld} {pyop} {val_src})"
-        # Si llega aquí, es un literal booleano suelto
         return repr(t)
-    return build(iter(tokens))
+    return consume()
 
-def merge_attr(existing: str, new_expr: str):
-    """Combina un atributo existente con OR lógico si ya hay algo. Ajusta según necesidad."""
-    e = existing.strip()
-    if not e:
-        return new_expr
-    # Conservador: AND para required/readonly/invisible añade restricciones
-    return f"({e}) or ({new_expr})" if 'invisible' in '__key__' else f"({e}) or ({new_expr})"
+def _to_expr(value: Any) -> str:
+    if isinstance(value, list):
+        # Si hay operadores prefijo, parsea en notación polaca
+        if any(isinstance(x, str) and x in ('&','|','!') for x in value):
+            return _build_expr_prefix(value)
+        # Si no, AND implícito
+        return "(" + " and ".join(_to_expr(x) for x in value) + ")"
+    if isinstance(value, tuple):
+        return _expr_from_tuple(value)
+    if value in ('&','|','!'):
+        return "True"
+    return repr(value)
 
-def process_file(p: Path):
-    src = p.read_text(encoding="utf-8", errors="ignore")
-    changed = False
-    out = []
-    last_end = 0
-    for m in ATTRS_RE.finditer(src):
-        out.append(src[last_end:m.start()])
-        quote = m.group(1)
-        payload = m.group(2).strip()
-        try:
-            # Carga dict literal con ast.literal_eval
-            d = ast.literal_eval(payload)
-            if not isinstance(d, dict):
-                raise Exception("attrs no es dict")
-        except Exception:
-            # Deja el attrs tal cual si no parsea
-            out.append(m.group(0))
-            last_end = m.end()
-            continue
+def _repl(m: re.Match) -> str:
+    raw = m.group(2).strip()
+    try:
+        d = ast.literal_eval(raw)
+        if not isinstance(d, dict):
+            return m.group(0)
+        parts = []
+        for k in ('invisible','readonly','required'):
+            if k in d:
+                parts.append(f'{k}="{_to_expr(d[k])}"')
+        return (" " + " ".join(parts) + " ") if parts else ""
+    except Exception:
+        return m.group(0)
 
-        # Genera expr por cada clave conocida
-        new_attrs = []
-        for key in ('invisible','readonly','required'):
-            if key in d:
-                try:
-                    expr = to_expr_from_domain(d[key])
-                    new_attrs.append((key, expr))
-                except Exception:
-                    # si falla, conserva attrs original
-                    new_attrs = None
-                    break
-        if new_attrs is None or not new_attrs:
-            out.append(m.group(0))  # no transformación
-        else:
-            # Inserta los nuevos atributos y elimina attrs
-            # Nota: si ya existen esos atributos en el nodo, no los conocemos aquí.
-            # Resolveremos con una pasada extra para evitar duplicados simples.
-            repl = " ".join(f'{k}="{v}"' for k,v in new_attrs)
-            out.append(repl)
-            changed = True
-        last_end = m.end()
-    out.append(src[last_end:])
-
-    new_src = "".join(out)
-    if changed:
-        # Elimina duplicados triviales del tipo invisible="" repetido en el mismo tag
-        # (simple heurística)
-        new_src = re.sub(r'\sattrs\s*=\s*([\'"])(.*?)\1', '', new_src, flags=re.DOTALL)
-        p.write_text(new_src, encoding="utf-8")
-    return changed
+def process_file(p: Path) -> bool:
+    s = p.read_text(encoding="utf-8", errors="ignore")
+    new = re.sub(ATTRS_RE, _repl, s)
+    if new != s:
+        bak = p.with_suffix(p.suffix + ".bak")
+        if not bak.exists():
+            bak.write_text(s, encoding="utf-8")
+        p.write_text(new, encoding="utf-8")
+        return True
+    return False
 
 def main():
     if len(sys.argv) != 2:
-        print("Uso: python odoo17_attrs_translate.py RUTA_ADDONS")
-        sys.exit(1)
+        print("Uso: python odoo17_attrs_translate.py RUTA_ADDONS"); sys.exit(1)
     root = Path(sys.argv[1]).resolve()
     if not root.exists():
-        print("Ruta no encontrada")
-        sys.exit(1)
-    files = list(root.rglob("*.xml"))
-    touched = 0
-    for f in files:
-        try:
-            if process_file(f):
-                touched += 1
-        except Exception as e:
-            print(f"[WARN] {f}: {e}")
-    print(f"Archivos modificados: {touched}/{len(files)}")
+        print("Ruta no encontrada"); sys.exit(1)
+    xmls = list(root.rglob("*.xml"))
+    changed = sum(process_file(p) for p in xmls)
+    print(f"XML modificados: {changed}/{len(xmls)}")
 
 if __name__ == "__main__":
     main()
